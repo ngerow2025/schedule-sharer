@@ -1,0 +1,38 @@
+### General ###
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore log files
+*.log
+
+# Ignore local environment variable files
+.env
+.env.local
+.env.*.local
+
+### Go - Backend ###
+# Ignore compiled executables (like schedule-sharer.exe)
+*.exe
+
+# If you compile for Linux/macOS, the binary might not have an extension
+# You can uncomment the line below to ignore it by name
+schedule-sharer
+
+### Node.js / Vite - Frontend ###
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output directory (Vite's default is 'dist')
+# This will also cover your 'backend/dist' directory
+dist/
+
+# Ignore Vite-specific cache directory
+.vite/
+
+# Ignore TypeScript build info files
+*.tsbuildinfo
