@@ -33,6 +33,11 @@ const NavBar: React.FunctionComponent = () => {
                   Home
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink to="/MySchedule" className="nav-link">
+                  My Schedule
+                </NavLink>
+              </NavItem>
               {
                 // to add stuff to the navbar, add a NavItem tag with a NavLink to the route
               }
