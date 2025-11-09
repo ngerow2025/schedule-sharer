@@ -1,0 +1,3 @@
+onlyBuiltDependencies:
+  - '@axa-fr/react-oidc'
+  - esbuild
