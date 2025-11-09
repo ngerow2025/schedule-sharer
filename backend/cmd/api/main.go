@@ -19,7 +19,7 @@ func main() {
     defer db.Close()
 
     s := server.New(db)
-	s.RegisterAPIRoutesWithMiddleware(server.Create_CORS_middleware("http://localhost:5173")) //this allows use from the development vite server
+	s.RegisterAPIRoutesWithMiddleware(server.Create_CORS_middleware(os.Getenv("FRONTEND_URL"))) //this allows use from the development vite server
 
     log.Fatal(s.Listen(":8080"))
 }
