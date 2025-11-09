@@ -5,6 +5,8 @@ import { toast } from "react-toastify"
 
 export const baseURL: string = import.meta.env.VITE_API_BASE_URL || ""
 
+console.log("API base URL:", baseURL)
+
 type FetchFunc = (
     input: RequestInfo | URL,
     init?: RequestInit | undefined
@@ -55,6 +57,7 @@ const wrapFetchWithLogging = (fetchFn: FetchFunc): FetchFunc => {
 }
 
 export const useFetch = <T>(url: string, params?: Dict): T | null => {
+    console.log("fetching ", url, params)
     const [ret, setRet] = useState<T | null>(null)
 
     const fetchFunc = wrapFetchWithLogging(
@@ -119,6 +122,8 @@ const apiGet =
             url +=
                 encodeURIComponent(key) + "=" + encodeURIComponent(params![key])
         }
+
+        console.log("API GET ", baseURL + url)
 
         return fetch(baseURL + url)
             .then(body => {
