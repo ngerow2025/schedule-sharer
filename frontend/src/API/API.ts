@@ -12,12 +12,56 @@ type FetchFunc = (
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Dict = { [key: string]: any }
 
+// Lightweight logging wrapper for fetch-like functions. Logs method, URL, status, duration and errors.
+const wrapFetchWithLogging = (fetchFn: FetchFunc): FetchFunc => {
+    return (input: RequestInfo | URL, init?: RequestInit) => {
+        const start = Date.now()
+        // determine method
+        let method = "GET"
+        if (init && init.method) {
+            method = init.method
+        } else if (typeof input !== "string") {
+            try {
+                // Request object has a `method` property and `url`
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                if (input && input.method) method = input.method
+            } catch (e) {
+                // ignore
+            }
+        }
+        const urlStr = typeof input === "string" ? input : input instanceof URL ? input.toString() : ("" + input)
+
+        return fetchFn(input, init)
+            .then(response => {
+                const duration = Date.now() - start
+                try {
+                    console.log(`[API] ${method} ${urlStr} -> ${response.status} (${duration}ms)`)
+                } catch (e) {
+                    // Don't let logging break the request flow
+                }
+                return response
+            })
+            .catch(err => {
+                const duration = Date.now() - start
+                try {
+                    console.error(`[API] ${method} ${urlStr} ERROR (${duration}ms)`, err)
+                } catch (e) {
+                    // noop
+                }
+                throw err
+            })
+    }
+}
+
 export const useFetch = <T>(url: string, params?: Dict): T | null => {
     const [ret, setRet] = useState<T | null>(null)
 
-    const fetchFunc = USE_SSO
-        ? useOidcFetch().fetch
-        : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    const fetchFunc = wrapFetchWithLogging(
+        USE_SSO
+            ? useOidcFetch().fetch
+            : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    )
 
     useEffect(() => {
         apiGet(fetchFunc)<T>(url, params || {}).then(setRet)
@@ -29,9 +73,11 @@ export const useFetch = <T>(url: string, params?: Dict): T | null => {
 export const useFetchArray = <T>(url: string, params?: Dict): T[] => {
     const [ret, setRet] = useState<T[]>([])
 
-    const fetchFunc = USE_SSO
-        ? useOidcFetch().fetch
-        : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    const fetchFunc = wrapFetchWithLogging(
+        USE_SSO
+            ? useOidcFetch().fetch
+            : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    )
 
     useEffect(() => {
         apiGet(fetchFunc)<T[]>(url, params || {}).then(setRet)
@@ -41,9 +87,11 @@ export const useFetchArray = <T>(url: string, params?: Dict): T[] => {
 }
 
 export const useApi = () => {
-    const fetchFunc = USE_SSO
-        ? useOidcFetch().fetch
-        : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    const fetchFunc = wrapFetchWithLogging(
+        USE_SSO
+            ? useOidcFetch().fetch
+            : ((input: RequestInfo | URL, init?: RequestInit) => window.fetch(input, init))
+    )
     return {
         apiGet: apiGet(fetchFunc),
         apiPost: apiPostPutPatch(fetchFunc, "POST"),

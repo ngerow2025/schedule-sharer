@@ -17,6 +17,9 @@ import {
     faUser,
     faWarning,
     faShield,
+    faCalendar,
+    faKey,
+    faUsers,
 } from "@fortawesome/free-solid-svg-icons"
 import { useOidcUser } from "@axa-fr/react-oidc"
 import { isEboardOrRTP } from "../../util"
@@ -77,6 +80,32 @@ const NavBar = () => {
                                     className="mr-1"
                                 />
                                 Kevlar
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/my-schedule">
+                                <FontAwesomeIcon
+                                    icon={faCalendar}
+                                    className="mr-1"
+                                />
+                                My Schedule
+                            </NavLink>
+                        </NavItem>
+
+                        <NavItem>
+                            <NavLink href="/shared-schedule">
+                                <FontAwesomeIcon
+                                    icon={faUsers}
+                                    className="mr-1"
+                                />
+                                Shared Schedule
+                            </NavLink>
+                        </NavItem>
+
+                        <NavItem>
+                            <NavLink href="/access">
+                                <FontAwesomeIcon icon={faKey} className="mr-1" />
+                                Access
                             </NavLink>
                         </NavItem>
                         {isEboardOrRTP(oidcUser) && (

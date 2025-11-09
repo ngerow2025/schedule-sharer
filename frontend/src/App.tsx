@@ -8,6 +8,9 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import SubmitReport from "./pages/SubmitReport"
 import Reports from "./pages/Reports"
+import MySchedule from "./pages/MySchedule"
+import Access from "./pages/Access"
+import SharedSchedule from "./pages/SharedSchedule"
 
 function App() {
     return (
@@ -43,6 +46,12 @@ function App() {
                         <Route path="/kevlar" element={<Kevlar />} />
                         <Route path="/report" element={<SubmitReport />} />
                         <Route path="/reports" element={<Reports />} />
+                        <Route path="/my-schedule" element={<MySchedule />} />
+                        <Route path="/access" element={<Access />} />
+                        <Route
+                            path="/shared-schedule"
+                            element={<SharedSchedule />}
+                        />
                     </Routes>
                 </Container>
             </Container>
