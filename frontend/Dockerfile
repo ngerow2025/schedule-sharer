@@ -3,7 +3,7 @@
 FROM node:22-alpine AS dev
 
 #first setup pnpm and corepack
-RUN apk add --no-cache bash curl
+RUN apk add --no-cache bash curl git
 
 WORKDIR /app
 

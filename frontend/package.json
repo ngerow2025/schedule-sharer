@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "preinstall": "git config core.hooksPath git-hooks",
     "dev": "vite",
     "host": "vite --host",
     "build": "tsc && vite build",
