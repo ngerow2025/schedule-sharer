@@ -36,3 +36,6 @@ dist/
 
 # Ignore TypeScript build info files
 *.tsbuildinfo
+
+#ignore the live reload build temp files
+backend/tmp

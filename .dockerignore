@@ -5,3 +5,4 @@ dist
 frontend/dist
 backend/dist
 .git
+backend/tmp

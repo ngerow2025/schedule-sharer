@@ -14,6 +14,13 @@ type APIHandler struct {
 func GetAPIHandlers() []APIHandler {
 	return []APIHandler{
 		{
+			MethodAndRoute: "/api/",
+			Handler: func(w http.ResponseWriter, r *http.Request) {
+				http.NotFound(w, r)
+				log.Println("unknown api call recieved", r.URL.Path)
+			},
+		},
+		{
 			MethodAndRoute: "GET /api/hello",
 			Handler: func(w http.ResponseWriter, r *http.Request) {
 				resp := map[string]string{"message": "Hello from API"}

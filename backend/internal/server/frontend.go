@@ -7,7 +7,7 @@ import (
 )
 
 //go:embed dist
-var embeddedFrontend embed.FS
+var embeddedFrontend embed.FS 
 
 func (s *Server) RegisterEmbeddedFrontend() {
     static := http.FileServer(http.FS(embeddedFrontend))
