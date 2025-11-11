@@ -30,6 +30,12 @@ interface Group {
     users: string[]
 }
 
+interface CSHUser {
+    username: string,
+    uuid: string,
+    fullName: string,
+}
+
 const Access = () => {
     const { apiGet, apiPost, apiPatch } = useApi()
     const [events, setEvents] = useState<EventItem[]>([])
@@ -42,6 +48,19 @@ const Access = () => {
     const [groupTags, setGroupTags] = useState("") // comma separated tags
     const [groups, setGroups] = useState<Group[]>([])
 
+    const [users, setUsers] = useState<CSHUser[]>([])
+
+    console.log("asdfsadf")
+
+    useEffect(() => {
+        apiGet<CSHUser[]>("/users")
+            .then(u => {
+                setUsers(u || [])
+            })
+            .catch(err => {
+                toastError("Failed to load users")(err)
+            })
+    }, [])
 
     useEffect(() => {
         setLoading(true)

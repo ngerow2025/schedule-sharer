@@ -1,12 +1,12 @@
 package main
 
 import (
-    "database/sql"
-    "log"
-    "os"
+	"database/sql"
+	"log"
+	"os"
 
-    _ "github.com/lib/pq"
-    "github.com/ngerow2025/schedule-sharer/internal/server"
+	_ "github.com/lib/pq"
+	"github.com/ngerow2025/schedule-sharer/internal/server"
 )
 
 
@@ -31,6 +31,7 @@ func main() {
 
     s := server.New(db)
 	s.RegisterAPIRoutesWithMiddleware(server.Create_CORS_middleware(os.Getenv("FRONTEND_URL"))) //this allows use from the development vite server
+
 
     log.Fatal(s.Listen(":8080"))
 }
